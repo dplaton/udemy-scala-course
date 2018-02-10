@@ -19,6 +19,6 @@ project/plugins/project/
 
 # ensime specific
 .ensime
-.ensime-cache/
+.ensime_cache/
 ensine-langserver.*
 pc*

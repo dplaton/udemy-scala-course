@@ -19,6 +19,7 @@ object Nil extends List[Nothing] {
   override def add[S] (elem:S): List[Nothing] = ???
   override def ++[S](other: List[S]): List[S] =  other
   override def reverse: List[Nothing] = Nil
+  override def toString: String = ""
 
 }
 
@@ -31,7 +32,7 @@ class Cons[T](val head:T, val tail: List[T]) extends List[T] {
 
     def reverseUtil(input: List[T], accumulator: List[T]):List[T] = {
       if (input.isEmpty) accumulator
-      else reverseUtil(input.tail, new Cons(input.head, Nil) ++ accumulator)
+      else reverseUtil(input.tail, new Cons(input.head, accumulator))
     }
     reverseUtil(this, Nil)
   }
@@ -41,12 +42,14 @@ class Cons[T](val head:T, val tail: List[T]) extends List[T] {
     def enumerateAll(list: List[T]): String = {
       if (list.isEmpty) ""
       else if (list.tail.isEmpty) "" + list.head
-      else list.head + " " + enumerateAll(tail)
+      else list.head + " " + enumerateAll(list.tail)
     }
 
     "[" + enumerateAll(this) + "]"
   }
 }
+
+
 
 object ListDemo extends App {
  
@@ -56,6 +59,8 @@ object ListDemo extends App {
   println("The list A " + listA)
   println("List A reversed " + listA.reverse)
   println("List C " + listC)
-  //println("List B: " + (listA ++ new Cons(5, new Cons(6, new Cons(8, Nil)))))
+  val listB = listA ++ new Cons(5, new Cons(6, new Cons(8, Nil)))
+  println("List B: " + listB)
+  println("Reversing list B... " + listB.reverse)
 
 }
