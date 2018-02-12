@@ -13,6 +13,8 @@ object Command {
 
   val MKDIR = "mkdir"
   val LS = "ls"
+  val CD = "cd"
+  val PWD = "pwd"
 
   def emptyCommand: Command = (currentState: State) => currentState
 
@@ -32,7 +34,12 @@ object Command {
       if (args.length < 2) incompleteCommand(args(0))
       else new Mkdir(args(1))
     } else if (LS.equals(args(0))) {
-      new Ls()
+      new Ls
+    } else if (CD.equals(args(0))) {
+        if (args.length < 2) incompleteCommand(args(0))
+        else new Cd(args(1))
+    } else if (PWD.equals(args(0))) {
+        new Pwd
     } else new UnknownCommand
   }
 }

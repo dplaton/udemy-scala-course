@@ -10,7 +10,7 @@ import org.scalacourse.filesystem.file.Directory
   */
 object Filesystem extends App {
 
-  val rootFolder = Directory.ROOT;
+  val rootFolder = Directory.ROOT
   var state = State(rootFolder, rootFolder)
   val scanner = new Scanner(System.in)
 

@@ -12,7 +12,6 @@ class Directory(override val parentPath: String, override val name: String, val 
     def findEntryHelper(name: String, contentList: List[FsEntry]): FsEntry = {
       if (contentList.isEmpty) null
       else if (contentList.head.name.equals(name)){
-        println("content list head: " + contentList.head)
         contentList.head
       }
       else findEntryHelper(name, contentList.tail)
@@ -28,7 +27,7 @@ class Directory(override val parentPath: String, override val name: String, val 
   }
 
   def getAllFolderNamesInPath(): List[String] = {
-    parentPath.substring(1).split(Directory.SEPARATOR).toList.filter(x => !x.isEmpty)
+    path.substring(1).split(Directory.SEPARATOR).toList.filter(x => !x.isEmpty)
   }
 
   def hasEntry(name: String): Boolean = (findEntry(name) != null)
@@ -48,7 +47,7 @@ object Directory {
   val ROOT_PATH = "/"
   val PARENT_FOLDER = ".."
 
-  def ROOT: Directory = Directory.empty(ROOT_PATH,"")
+  def ROOT: Directory = Directory.empty("","")
 
   def empty(parentPath: String, name: String): Directory = new Directory(parentPath, name, List())
 }

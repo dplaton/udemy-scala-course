@@ -30,7 +30,7 @@ class Mkdir(name: String) extends Command {
 
     val wd = state.wd
     //1. All the directories in the full path
-    val dirs = wd.getAllFolderNamesInPath()
+    val dirs = wd.getAllFolderNamesInPath
 
     //2. Create new directory entry in wd
     val newDir = Directory.empty(wd.path, name)
