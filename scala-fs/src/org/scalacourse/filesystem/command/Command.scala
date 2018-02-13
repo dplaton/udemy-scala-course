@@ -15,6 +15,7 @@ object Command {
   val LS = "ls"
   val CD = "cd"
   val PWD = "pwd"
+  val TOUCH = "touch"
 
   def emptyCommand: Command = (currentState: State) => currentState
 
@@ -40,6 +41,12 @@ object Command {
         else new Cd(args(1))
     } else if (PWD.equals(args(0))) {
         new Pwd
+    } else if (TOUCH.equals(args(0))) {
+        if (args.length < 2) incompleteCommand(args(0))
+        else new Touch(args(1))
+    } else if ("showstate".equals(args(0))) {
+        //TODO remove this debugging command
+        new ShowState
     } else new UnknownCommand
   }
 }
