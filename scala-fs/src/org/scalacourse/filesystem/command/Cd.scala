@@ -42,9 +42,34 @@ class Cd(path: String) extends Command {
       }
     }
 
+    @tailrec
+    def collapseRelativeTokes(path: List[String], accumulator: List[String]) : List[String] = {
+      if (path.isEmpty) accumulator
+      else if (".".equals(path.head)) collapseRelativeTokes(path.tail, accumulator)
+      else if ("..".equals(path.head)) {
+        if (accumulator.isEmpty) null
+        else collapseRelativeTokes(path.tail, accumulator.init) //list.init returns the list without the last element
+      }
+      else collapseRelativeTokes(path.tail, accumulator :+ path.head)
+    }
+
+    //1. Extract the components in the path
     val pathComponents: List[String] = path.substring(1).split(Directory.SEPARATOR).toList
 
-    navigate(root, pathComponents)
+    //1.1 eliminate / collapse relative tokens
+    /*
+
+      ["a","."] => ["a"]
+      ["a","b",".","."] => ["a", "b"]
+
+      /a/../ => ["a",".."] => [] (.. is the parent of a)
+      /a/b/.. => ["a","b",".."] => ["a"]
+
+     */
+
+    val newPathComponents = collapseRelativeTokes(pathComponents, List())
+    if (newPathComponents == null) null
+    else navigate(root, newPathComponents)
 
 
   }
