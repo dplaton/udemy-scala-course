@@ -13,6 +13,13 @@ class Directory(override val parentPath: String, override val name: String, val 
     else findEntry(path.head).asDirectory.findDescendant(path.tail)
   }
 
+  def findDescendant(relativePath: String): Directory = {
+    if (relativePath.isEmpty) this
+    else ???
+  }
+
+  def removeEntry(entryName: String): Directory = ???
+
   def getAllFolderNamesInPath(): List[String] = {
     path.substring(1).split(Directory.SEPARATOR).toList.filter(x => !x.isEmpty)
   }
