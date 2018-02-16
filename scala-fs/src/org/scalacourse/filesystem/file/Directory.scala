@@ -73,7 +73,7 @@ class Directory(override val parentPath: String, override val name: String, val 
     *
     * @return the parent folder names, as a [[List]]
     */
-  def getAllFolderNamesInPath(): List[String] = {
+  def allFoldersInPath(): List[String] = {
     path.substring(1).split(Directory.SEPARATOR).toList.filter(x => !x.isEmpty)
   }
 
@@ -90,7 +90,7 @@ class Directory(override val parentPath: String, override val name: String, val 
     * @param newEntry the new entry, as a [[FsEntry]]
     * @return a new directory instance with the entry updated
     */
-  def replaceEntry(entryName: String, newEntry: Directory): Directory = new Directory(parentPath, name, contents.filter(e => !e.name.equals(entryName)) :+ newEntry)
+  def replaceEntry(entryName: String, newEntry: FsEntry): Directory = new Directory(parentPath, name, contents.filter(e => !e.name.equals(entryName)) :+ newEntry)
 
   /**
     * Converts a [[FsEntry]] to a [[Directory]] (just like a cast)

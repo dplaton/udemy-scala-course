@@ -2,7 +2,11 @@ package org.scalacourse.filesystem.file
 
 import org.scalacourse.filesystem.FilesystemException
 
-class File(override val parentPath: String, override val name: String, val contents:String ) extends FsEntry(parentPath, name) {
+class File(override val parentPath: String, override val name: String, val content:String ) extends FsEntry(parentPath, name) {
+
+  def appendContents(newContent: String): File = new File(parentPath, name, content + "\n" + newContent)
+
+  def setContents(content: String): File = new File(parentPath, name, content)
 
   override def asDirectory: Directory = throw new FilesystemException("A file cannot be converted to a directory")
 

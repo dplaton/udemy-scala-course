@@ -26,6 +26,8 @@ object Command {
   val PWD = "pwd"
   val TOUCH = "touch"
   val RM="rm"
+  val ECHO = "echo"
+  val CAT = "cat"
 
   /**
     * Updates the state after an empty command has been issued
@@ -69,6 +71,12 @@ object Command {
     } else if(RM.equals(args(0))) {
       if (args.length < 2) incompleteCommand(args(0))
       else new Rm(args(1))
+    } else if (ECHO.equals(args(0))) {
+      if (args.length < 2) incompleteCommand(args(0))
+      else new Echo(args.tail)
+    } else if (CAT.equals(args(0))) {
+      if (args.length < 2) incompleteCommand(args(0))
+      else new Cat(args(1))
     } else new UnknownCommand
   }
 }

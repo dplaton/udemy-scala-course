@@ -51,7 +51,7 @@ abstract class CreateEntry(name: String) extends Command {
 
     val wd = state.wd
     //1. All the directories in the full path
-    val dirs = wd.getAllFolderNamesInPath
+    val dirs = wd.allFoldersInPath
 
     //2. Create new directory entry in wd
     val newEntry: FsEntry = createEntry(state)
