@@ -1,7 +1,7 @@
 package org.scalacourse.filesystem.file
 
 /**
-  * Created by platon on 11/02/2018.
+  * Represents a filesystem entry. Every filesystem entry must have a parent path (even if it's the root path) and a name
   */
 abstract class FsEntry(val parentPath: String, val name: String) {
   def path: String = {

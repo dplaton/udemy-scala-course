@@ -6,11 +6,20 @@ import org.scalacourse.filesystem.State
   * Represent a command issued to the fs
   */
 trait Command {
+  /**
+    * Executes (applies) this command on the filesystem
+    * @param currentState the current state of the world
+    * @return the new state
+    */
   def apply(currentState: State): State
 }
 
+/**
+  * Companion object containing various helper functions
+  */
 object Command {
 
+  // constants, constants constants
   val MKDIR = "mkdir"
   val LS = "ls"
   val CD = "cd"
@@ -18,8 +27,17 @@ object Command {
   val TOUCH = "touch"
   val RM="rm"
 
+  /**
+    * Updates the state after an empty command has been issued
+    * @return the same state of the world since an empty command has no effect
+    */
   def emptyCommand: Command = (currentState: State) => currentState
 
+  /**
+    * Updates the state after an incomplete command has been issued
+    * @param name the name of the command
+    * @return the new state with an error message
+    */
   def incompleteCommand(name: String): Command = (currentState: State) => currentState.setMessage("Not enough arguments for " + name)
 
   /**

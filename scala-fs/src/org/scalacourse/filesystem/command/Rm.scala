@@ -3,7 +3,7 @@ import org.scalacourse.filesystem.State
 import org.scalacourse.filesystem.file.{Directory, FsEntry}
 
 /**
-  * Created by platon on 15/02/2018.
+  * Implements the "remove entry" (rm) command
   */
 class Rm(name: String) extends Command {
   override def apply(currentState: State): State = {
@@ -11,7 +11,7 @@ class Rm(name: String) extends Command {
     //1. Get working directory
     val wd = currentState.wd
 
-    //2. Get full path of the wd
+    //2. Get the absolute path of the wd
     val absolutePath: String =
       if (name.startsWith(Directory.SEPARATOR)) name
         else if (wd.isRoot) wd.path + name
@@ -26,9 +26,20 @@ class Rm(name: String) extends Command {
 
   }
 
+  /**
+    * Performs the actual removal. Since the structure is immutable it has to be recreated after this operation
+    * @param path the path (entry) to remove
+    * @param state the state of the world
+    * @return the new state
+    */
   def doRm(path: String, state:State) : State = {
 
-
+    /**
+      * Removes the actual entry and updates the structure of the folders
+      * @param currentDirectory the current directory we're in
+      * @param path the absolute paths as a list of directories
+      * @return the new root of the file structure
+      */
     def updateStructure(currentDirectory: Directory, path: List[String]): Directory = {
       if (path.isEmpty) currentDirectory
       else if (path.tail.isEmpty) currentDirectory.removeEntry(path.head)
