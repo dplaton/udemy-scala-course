@@ -15,10 +15,13 @@ class Directory(override val parentPath: String, override val name: String, val 
 
   def findDescendant(relativePath: String): Directory = {
     if (relativePath.isEmpty) this
-    else ???
+    else findDescendant(relativePath.split(Directory.SEPARATOR).toList)
   }
 
-  def removeEntry(entryName: String): Directory = ???
+  def removeEntry(entryName: String): Directory = {
+    if (!hasEntry(entryName)) this
+    else new Directory(parentPath, name, contents.filter( e => !e.name.equals(entryName)))
+  }
 
   def getAllFolderNamesInPath(): List[String] = {
     path.substring(1).split(Directory.SEPARATOR).toList.filter(x => !x.isEmpty)

@@ -28,13 +28,19 @@ class Rm(name: String) extends Command {
 
   def doRm(path: String, state:State) : State = {
 
-    //4. Find the entry to remove
-    //5. Rebuild structure
 
     def updateStructure(currentDirectory: Directory, path: List[String]): Directory = {
       if (path.isEmpty) currentDirectory
       else if (path.tail.isEmpty) currentDirectory.removeEntry(path.head)
-      else ???
+      else {
+        val nextDirectory = currentDirectory.findEntry(path.head)
+        if (!nextDirectory.isDirectory) currentDirectory
+        else {
+          val newNextDirectory: Directory = updateStructure(nextDirectory.asDirectory, path.tail)
+          if (newNextDirectory.equals(nextDirectory)) currentDirectory
+          else currentDirectory.replaceEntry(path.head, newNextDirectory)
+        }
+      }
     }
 
     val pathComponents: List[String] = path.substring(1).split("/").toList
