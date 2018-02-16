@@ -84,7 +84,7 @@ object Command {
       case _ => new UnknownCommand
     }
 
-    // the above statment replaces this whole IF statement below:
+    // the above statement replaces this whole IF statement below:
 
     /*
     if (input.isEmpty || args.isEmpty) emptyCommand
