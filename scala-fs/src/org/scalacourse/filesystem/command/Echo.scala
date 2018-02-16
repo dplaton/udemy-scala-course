@@ -89,7 +89,7 @@ class Echo(args: Array[String]) extends Command {
   def doEcho(state: State, content: String, filename: String, append: Boolean): State = {
     if (filename.contains(Directory.SEPARATOR)) state.setMessage("Echo: file name must not contain separators")
     else {
-      val newRoot: Directory = rootAfterEcho(state.wd, state.wd.allFoldersInPath :+ filename, content, append)
+      val newRoot: Directory = rootAfterEcho(state.root, state.wd.allFoldersInPath :+ filename, content, append)
       if (newRoot.equals(state.root)) state.setMessage(filename + ": no such file")
       else {
         State(newRoot, newRoot.findDescendant(state.wd.allFoldersInPath))
