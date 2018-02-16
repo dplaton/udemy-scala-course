@@ -52,6 +52,42 @@ object Command {
     val args: Array[String] = input.split(" ")
 
     if (input.isEmpty || args.isEmpty) emptyCommand
+    else args(0) match {
+      case MKDIR => {
+        if (args.length < 2) incompleteCommand(args(0))
+        else new Mkdir(args(1))
+      }
+      case LS => new Ls
+      case CD => {
+        if (args.length < 2) incompleteCommand(args(0))
+        else new Cd(args(1))
+      }
+      case PWD => new Pwd
+      case TOUCH => {
+        if (args.length < 2) incompleteCommand(args(0))
+        else new Touch(args(1))
+      }
+      case RM => {
+        if (args.length < 2) incompleteCommand(args(0))
+        else new Rm(args(1))
+      }
+      case ECHO => {
+        if (args.length < 2) incompleteCommand(args(0))
+        else new Echo(args.tail)
+      }
+      case CAT => {
+        if (args.length < 2) incompleteCommand(args(0))
+        else new Cat(args(1))
+      }
+      case "showstate" => new ShowState
+
+      case _ => new UnknownCommand
+    }
+
+    // the above statment replaces this whole IF statement below:
+
+    /*
+    if (input.isEmpty || args.isEmpty) emptyCommand
     else if (MKDIR.equals(args(0))) {
       if (args.length < 2) incompleteCommand(args(0))
       else new Mkdir(args(1))
@@ -78,5 +114,6 @@ object Command {
       if (args.length < 2) incompleteCommand(args(0))
       else new Cat(args(1))
     } else new UnknownCommand
+    */
   }
 }
